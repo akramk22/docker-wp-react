@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Menu from "./Menu.js";
 import { Config } from "../config.js";
 import stylesheet from '../src/styles/style.scss'
 
-class Header extends Component {
+class HeaderMeta extends Component {
     constructor() {
         super();
     }
-
     render() {
-
         return (
             <div>
                 <Head>
@@ -30,4 +27,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default HeaderMeta;

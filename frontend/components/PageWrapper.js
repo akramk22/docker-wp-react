@@ -1,5 +1,6 @@
 import React from "react";
 import { Config } from "../config.js";
+import fetch from "isomorphic-unfetch";
 
 const PageWrapper = Comp => (
   class extends React.Component {
