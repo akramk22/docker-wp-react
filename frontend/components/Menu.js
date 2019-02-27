@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { Config } from "../config.js";
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import Headroom from 'react-headroom'
+import { theme } from '../src/styles/theme.js'
 
 
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 15px;
+  padding: 15px 30px;
 `
 
 const MenuItem = styled.a`
@@ -17,10 +18,22 @@ const MenuItem = styled.a`
   cursor: pointer;
   text-transform: uppercase;
   font-size: 12px;
-  transition: .2s ease all;
-  &:hover {
-    color: #464646;
+  color: ${props => props.theme.white};
+  position: relative;
+  transition: .3s cubic-bezier(.66,0,.75,1);
+  &:before {
+    position: absolute;
+    content: '';
+    background: ${props => props.theme.white};
+    height: 2px;
+    width: 0%;
+    bottom: -3px;
+    transition: .3s cubic-bezier(.66,0,.75,1);
   }
+  &:hover::before {
+    width: 100%;
+  }
+
 `
 
 const Hotline = styled.div`
@@ -28,10 +41,13 @@ const Hotline = styled.div`
   flex-direction: column;
   span {
       font-size: 12px;
+      color: ${props => props.theme.white};
   }
   a {
+    color: ${props => props.theme.white};
+    text-decoration: none;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
   }
 `
 
@@ -59,7 +75,7 @@ class Menu extends Component {
         const actualPage = item.object === "category" ? "category" : "post";
         return (
             <Link
-                as={`/${item.object}/${slug}`}
+                as={item.object === 'post' || item.object === 'page' ? `/${slug}` : `/${item.object}/${slug}`}
                 href={`/${actualPage}?slug=${slug}&apiRoute=${item.object}`}
                 key={item.ID}
             >
@@ -71,27 +87,26 @@ class Menu extends Component {
 
     return(
       <Headroom style={{
-        webkitTransition: 'all 1s ease-in-out',
-        mozTransition: 'all 1s ease-in-out',
-        oTransition: 'all 1s ease-in-out',
-        transition: 'all 1s ease-in-out'
+        WebkitTransition: 'all .4s ease-in-out',
+        MozTransition: 'all .4s ease-in-out',
+        OTransition: 'all .4s ease-in-out',
+        transition: 'all .4s ease-in-out'
       }}>
+      <ThemeProvider theme={theme}>
       <HeaderContainer>
-        <div>
-          <picture>
-              <source type="images/webp" srcSet="/static/images/BellBros_Logo.webp"/>
-              <source type="images/png" srcSet="/static/images/BellBros_Logo.png"/>
-              <img
-                  src="/static/images/BellBros_Logo.png"
-                  width="200"
-
-                />
-          </picture>
+        <div style={{cursor: 'pointer'}}>
+          <Link href="/">
+            <picture>
+                <source type="images/webp" srcSet="/static/images/BellBros_Logo.webp"/>
+                <source type="images/png" srcSet="/static/images/BellBros_Logo.png"/>
+                <img
+                    src="/static/images/BellBros_Logo.png"
+                    width="200"
+                  />
+            </picture>
+          </Link>
         </div>
           <nav>
-            <Link href="/">
-                <MenuItem>Home</MenuItem>
-            </Link>
             {menuItems}
             <Link href="/blog">
                 <MenuItem>Blog</MenuItem>
@@ -103,7 +118,8 @@ class Menu extends Component {
                   <a>916-226-9677</a>
               </Link>
           </Hotline>
-      </HeaderContainer>
+        </HeaderContainer>
+       </ThemeProvider>
       </Headroom>
     )
   }

@@ -76,9 +76,14 @@ add_action(
  * @param WP_REST_Request $request Request.
  * @return WP_REST_Response
  */
-function rest_get_post( WP_REST_Request $request ) {
-    return rest_get_content( $request, 'post', __FUNCTION__ );
-}
+ function rest_get_post( WP_REST_Request $request ) {
+        if ( get_page_by_path($request->get_param( 'slug' ))){
+            $type = 'page';
+        } else {
+            $type = 'post';
+        }
+        return rest_get_content( $request, $type, __FUNCTION__ );
+    }
 
 /**
  * Respond to a REST API request to get page data.

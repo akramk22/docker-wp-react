@@ -18,10 +18,11 @@
     "author": "",
     "license": "ISC",
     "resolutions": {
-      "styled-jsx": "3.0.0"
+        "styled-jsx": "3.0.0"
     },
     "dependencies": {
         "express": "^4.16.2",
+        "fontfaceobserver": "^2.1.0",
         "isomorphic-unfetch": "^2.0.0",
         "next": "latest",
         "next-nprogress": "^1.4.0",
